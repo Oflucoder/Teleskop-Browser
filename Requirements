@@ -1,0 +1,59 @@
+## Requirements
+
+- Node.js 20+
+- pnpm 9+
+
+## Installation
+
+```bash
+pnpm install
+node node_modules/.pnpm/electron@*/node_modules/electron/install.js
+pnpm run build
+```
+
+## Running
+
+```bash
+pnpm dev
+```
+
+Discovery Telescope web interface (non-browser):
+
+```bash
+pnpm kesif:web
+```
+
+API: `http://127.0.0.1:3921`
+
+## Project structure
+
+- `packages/teleskop-core` — shared models
+- `packages/kesif-durbunu` — crawler, index, search API
+- `packages/teleskop-assistant` — local assistant (rule-based)
+- `apps/des...
+
+## Project structure
+
+- `packages/teleskop-core` — shared models
+- `packages/kesif-durbunu` — crawler, index, search API
+- `packages/teleskop-assistant` — local assistant (rule-based)
+- `apps/desktop` — Electron browser
+- `apps/kesif-web` — external search site
+- `apps/mobile` — Flutter (Phase 2)
+
+## Features (v0.1)
+
+- Tabbed browsing, workspace, setup wizard
+- Discovery Binoculars local search + seed index
+- Ad/tracker blocking, privacy panel, panic button
+- Bookmarks, history, notes, ...
+
+## Features (v0.1)
+
+- Tabbed browsing, workspace, setup wizard
+- Discovery Binoculars local search + seed index
+- Ad/tracker blocking, privacy panel, panic button
+- Bookmarks, history, notes, tools sidebar
+- Password manager (OS-encrypted vault), secure download warning
+- RAM Saver, screenshot, offline games
+- Local assistant commands in 6 languages

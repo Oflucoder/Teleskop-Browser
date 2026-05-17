@@ -1,0 +1,15 @@
+node_modules/
+dist/
+out/
+*.log
+.DS_Store
+Thumbs.db
+.env
+.env.*
+!.env.example
+*.local
+coverage/
+.turbo/
+apps/desktop/release/
+apps/mobile/.dart_tool/
+apps/mobile/build/

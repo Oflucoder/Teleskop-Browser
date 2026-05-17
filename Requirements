@@ -23,7 +23,7 @@ Discovery Telescope web interface (non-browser):
 pnpm kesif:web
 ```
 
-API: `http://127.0.0.1:3921`
+API: `localhost`
 
 ## Project structure
 

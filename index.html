@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electron Tarayıcı</title>
+  <style>
+    :root {
+      --bg-color: #232629;
+      --toolbar-bg: #31363b;
+      --border-color: #4d5057;
+      --text-color: #eff0f1;
+      --accent-color: #3daee9;
+      --input-bg: #1d2023;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: system-ui, -apple-system, sans-serif;
+      overflow: hidden;
+    }
+
+    #toolbar {
+      display: flex;
+      padding: 8px 12px;
+      background-color: var(--toolbar-bg);
+      border-bottom: 1px solid var(--border-color);
+      gap: 8px;
+      align-items: center;
+      -webkit-app-region: drag;
+    }
+
+    button {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-color);
+      border-radius: 4px;
+      padding: 6px 12px;
+      cursor: pointer;
+      -webkit-app-region: no-drag;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    button:hover {
+      background: var(--border-color);
+    }
+
+    button:active {
+      background: var(--input-bg);
+      border-color: var(--accent-color);
+    }
+
+    input {
+      flex: 1;
+      background-color: var(--input-bg);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 8px 12px;
+      outline: none;
+      -webkit-app-region: no-drag;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      border-color: var(--accent-color);
+    }
+
+    #content {
+      flex: 1;
+      display: flex;
+      background-color: #ffffff;
+    }
+
+    webview {
+      flex: 1;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="toolbar">
+    <button id="back" title="Geri">◁</button>
+    <button id="forward" title="İleri">▷</button>
+    <button id="reload" title="Yenile">↻</button>
+    <input type="text" id="url" value="https://duckduckgo.com" spellcheck="false" autocomplete="off" placeholder="URL girin veya arayın...">
+  </div>
+  <div id="content">
+    <webview id="view" src="https://duckduckgo.com"></webview>
+  </div>
+
+  <script>
+    const webview = document.getElementById('view');
+    const urlInput = document.getElementById('url');
+    const backBtn = document.getElementById('back');
+    const forwardBtn = document.getElementById('forward');
+    const reloadBtn = document.getElementById('reload');
+
+    const updateUrl = (url) => {
+      urlInput.value = url;
+    };
+
+    urlInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        let target = urlInput.value.trim();
+        if (target === '') return;
+
+        if (!target.includes('://') && !target.startsWith('localhost')) {
+          if (target.includes('.') && !target.includes(' ')) {
+            target = 'https://' + target;
+          } else {
+            target = 'https://duckduckgo.com/?q=' + encodeURIComponent(target);
+          }
+        }
+        webview.loadURL(target);
+        urlInput.blur();
+      }
+    });
+
+    backBtn.addEventListener('click', () => { if (webview.canGoBack()) webview.goBack(); });
+    forwardBtn.addEventListener('click', () => { if (webview.canGoForward()) webview.goForward(); });
+    reloadBtn.addEventListener('click', () => webview.reload());
+
+    webview.addEventListener('did-navigate', (e) => updateUrl(e.url));
+    webview.addEventListener('did-navigate-in-page', (e) => updateUrl(e.url));
+  </script>
+</body>
+</html>
